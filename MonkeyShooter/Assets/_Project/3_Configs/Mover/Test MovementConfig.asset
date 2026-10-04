@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f48d4e35d65fb047a74c34d08a890f8, type: 3}
+  m_Name: Test MovementConfig
+  m_EditorClassIdentifier: Assembly-CSharp::MovementConfig
+  <BaseMass>k__BackingField: 1
+  <GroundedStickForce>k__BackingField: -2
+  <ImpulseDampingRate>k__BackingField: 5
+  <MinMassThreshold>k__BackingField: 0.1
+  <DefaultGravityMultiplier>k__BackingField: 1
+  <BaseMoveSpeed>k__BackingField: 3
+  <JumpForce>k__BackingField: 4
+  <AirAcceleration>k__BackingField: 10
+  <AirForwardMultiplier>k__BackingField: 0.5
+  <AirStrafeMultiplier>k__BackingField: 1
+  <DirectionChangeImpulse>k__BackingField: 4
+  <AirImpulseWindow>k__BackingField: 0.25
+  <JumpBufferTime>k__BackingField: 0.15
+  <WallLatchDuration>k__BackingField: 1

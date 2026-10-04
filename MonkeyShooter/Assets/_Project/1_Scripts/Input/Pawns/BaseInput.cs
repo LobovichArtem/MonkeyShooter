@@ -13,12 +13,14 @@ public abstract class BaseInput<T, P> : IControllable
     public event Action OnEnableControl;
     public event Action OnDisableControl;
 
-    public BaseInput() => DisableControl();
-
-    public virtual void EnableControl(InputService input)
+    public BaseInput()
     {
-        InputService = input;
+        InputService = ServiceLocator.Get<InputService>();
+        DisableControl();
+    }
 
+    public virtual void EnableControl()
+    {
         var map = InputService.GetMap(RequiredActionMap);
         if (map != null)
         {
@@ -30,17 +32,8 @@ public abstract class BaseInput<T, P> : IControllable
 
     public virtual void DisableControl()
     {
-        InputService = null;
         OnDisableControl?.Invoke();
     }
-
-    //public T GetInput()
-    //{
-    //    return _packer.Pack(InputService.CurrentMap);
-    //}
-
-    private T _cachedInput;
-    private int _lastUpdateFrame = -1;
 
     public T GetInput()
     {
