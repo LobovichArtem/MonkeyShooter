@@ -26,4 +26,6 @@ public class MovementConfig : ScriptableObject
     [field: SerializeField] public float JumpBufferTime { get; private set; } = 0.15f; // Окно буферизации (в секундах)
     [field: Header("Wall Latch Settings")]
     [field: SerializeField] public float WallLatchDuration { get; private set; } = 1.0f; // Время зависания на стене (в секундах)
+    [field: SerializeField] public float WallLatchGravitatyMultiplier { get; private set; } = 0.05f; //скорость сползания в процентах
+    [field: SerializeField] public int WallLatchCount { get; private set; } = 1; //количество зависаний на стене подряд
 }

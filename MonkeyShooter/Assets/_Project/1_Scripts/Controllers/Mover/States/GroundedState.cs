@@ -19,7 +19,11 @@ public class GroundedState : IMovementState
         _airborneState = airborneState;
     }
 
-    public void Enter() { }
+    public void Enter()
+    {
+        _airborneState.ResetLatchCount();
+    }
+
     public void Exit() { }
 
     public void Update(in MovementFrameInput input)

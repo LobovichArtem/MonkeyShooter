@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Windows;
 
 public class WallLatchState : IMovementState
 {
@@ -35,13 +34,12 @@ public class WallLatchState : IMovementState
         // ПОЛНАЯ ЗАМОРОЗКА ДВИЖЕНИЯ ПРИ ЗАЦЕПЛЕНИИ
         _mover.SetHorizontalVelocity(Vector3.zero);
         _mover.SetVerticalVelocity(0);
-        _mover.SetGravityMultiplier(0);
+        _mover.SetGravityMultiplier(_config.WallLatchGravitatyMultiplier);
     }
 
     public void Exit()
     {
         _mover.ResetGravityMultiplier();
-        Debug.Log("WallExit");
     }
 
     public void Update(in MovementFrameInput input)

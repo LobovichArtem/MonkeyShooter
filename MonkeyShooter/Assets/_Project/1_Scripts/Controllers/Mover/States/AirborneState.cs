@@ -8,6 +8,8 @@ public class AirborneState : IMovementState
     private GroundedState _groundedState;
     private WallLatchState _wallLatchState;
 
+    private int _currentLatchCount;
+
     public AirborneState(
         CharacterMover mover,
         MovementConfig config,
@@ -27,8 +29,8 @@ public class AirborneState : IMovementState
         _wallLatchState = wallLatchState;
     }
 
-    public void Enter() { Debug.Log("Airborne"); }
-    public void Exit() { Debug.Log("AirborneExit"); }
+    public void Enter() { }
+    public void Exit() {  }
 
     public void Update(in MovementFrameInput input)
     {
@@ -42,8 +44,12 @@ public class AirborneState : IMovementState
 
         if (_mover.VerticalVelocity <= 0f && _mover.IsTouchingWall)
         {
-            _stateMachine.ChangeState(_wallLatchState);
-            return;
+            if (_currentLatchCount < _config.WallLatchCount)
+            {
+                _currentLatchCount++;
+                _stateMachine.ChangeState(_wallLatchState);
+                return;
+            }
         }
 
         // 3. Плавный Air Strafe
@@ -77,22 +83,8 @@ public class AirborneState : IMovementState
         _mover.SetHorizontalVelocity(currentVelocity);
     }
 
-    //private void ExecuteWallJump(Vector3 wallBounceDirection)
-    //{
-    //    Vector3 lookForward = _mover.transform.forward;
-    //    lookForward.y = 0f;
-    //    lookForward.Normalize();
-
-    //    // Складываем отталкивание от стены и направление взгляда
-    //    Vector3 jumpDirection = (wallBounceDirection + lookForward).normalized;
-
-    //    // Выбираем максимум между базовой скоростью и текущей инерцией
-    //    float currentSpeed = _mover.HorizontalVelocity.magnitude;
-    //    float targetSpeed = Mathf.Max(_config.BaseMoveSpeed, currentSpeed);
-
-    //    _mover.SetHorizontalVelocity(jumpDirection * targetSpeed);
-
-    //    // Используем стандартную силу прыжка
-    //    _mover.Jump(_config.JumpForce);
-    //}
+    public void ResetLatchCount()
+    {
+        _currentLatchCount = 0;
+    }
 }
