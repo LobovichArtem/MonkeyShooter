@@ -25,4 +25,10 @@ public class WeaponData : ScriptableObject
 
     // Вспомогательный расчет задержки между выстрелами в секундах
     public float FireDelay => 60f / FireRate;
+
+    [field: Header("Recoil")]
+    [field: SerializeField] public RecoilConfigSO RecoilConfig { get; private set; }
+
+    [field: Header("Visual Recoil")]
+    [field: SerializeField] public WeaponKickConfigSO KickConfig { get; private set; }
 }

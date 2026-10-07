@@ -15,7 +15,7 @@ public class HumanInputController : MonoBehaviour
     private HumanInput _humanInput;
     private MouseLook _mouseLook;
     private PlayerMovement _playerMovement;
-    private WeaponHandler _weaponHandler; 
+    private WeaponHandler _weaponHandler;
 
     private float _jumpBufferTimer;
 
@@ -31,6 +31,7 @@ public class HumanInputController : MonoBehaviour
         InitializeMouseLook();
         InitializeMovement();
         InitializeCombat();
+
     }
 
     private void InitializeMovement()

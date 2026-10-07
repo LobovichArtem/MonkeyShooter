@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0129c2cf8eadbb84ea840177f0372efe, type: 3}
-  m_Name: NewWeaponConfig
+  m_Name: NewWeaponConfig 2
   m_EditorClassIdentifier: Assembly-CSharp::WeaponDataSO
   <WeaponViewPrefab>k__BackingField: {fileID: 2103477748191617883, guid: c2af051c4f1e2114d877811f71ceecc0, type: 3}
   <BaseDamage>k__BackingField: 30
   <MinDamage>k__BackingField: 10
   <EffectiveDistance>k__BackingField: 15
   <MaxDistance>k__BackingField: 50
-  <FireRate>k__BackingField: 600
+  <FireRate>k__BackingField: 300
   <IsAutomatic>k__BackingField: 0
   <MagazineSize>k__BackingField: 20
   <ReloadTime>k__BackingField: 1.8
   <SpreadAngle>k__BackingField: 1.5
-  <RecoilConfig>k__BackingField: {fileID: 11400000, guid: edeb87e4ed898a24fa0e330931baa78b, type: 2}
-  <KickConfig>k__BackingField: {fileID: 11400000, guid: e4da6367faab32441a10400484c0c2f4, type: 2}
+  <RecoilConfig>k__BackingField: {fileID: 11400000, guid: a6cd087ceeed0f545a95ab5292d06fdc, type: 2}
+  <KickConfig>k__BackingField: {fileID: 11400000, guid: ba7b8cbd69048cd4ea1a7ae4be91e7ea, type: 2}

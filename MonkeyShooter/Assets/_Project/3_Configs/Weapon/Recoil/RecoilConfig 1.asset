@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0647a5fcc43c8a6419e797e1164c49c3, type: 3}
+  m_Name: RecoilConfig 1
+  m_EditorClassIdentifier: Assembly-CSharp::RecoilConfigSO
+  <Seed>k__BackingField: 1337
+  <PreGeneratedShotsCount>k__BackingField: 30
+  <RecoilStepMin>k__BackingField: {x: 1.5, y: -0.5}
+  <RecoilStepMax>k__BackingField: {x: 2.5, y: 0.5}
+  <Snappiness>k__BackingField: 25
+  <ReturnSpeed>k__BackingField: 3

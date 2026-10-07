@@ -64,7 +64,7 @@ public class HitscanWeapon
         _nextFireTime = Time.time + _data.FireDelay;
         _currentAmmo--;
 
-        Vector3 shootDirection = GetSpreadDirection(cameraTransform.forward);
+        Vector3 shootDirection = cameraTransform.forward;
         Vector3 origin = cameraTransform.position;
 
         HitscanHitInfo hitInfo;
@@ -88,17 +88,7 @@ public class HitscanWeapon
         OnShot?.Invoke(hitInfo);
     }
 
-    private Vector3 GetSpreadDirection(Vector3 forward)
-    {
-        if (_data.SpreadAngle <= 0f)
-            return forward;
 
-        float spreadX = UnityEngine.Random.Range(-_data.SpreadAngle, _data.SpreadAngle);
-        float spreadY = UnityEngine.Random.Range(-_data.SpreadAngle, _data.SpreadAngle);
-
-        Quaternion spreadRotation = Quaternion.Euler(spreadX, spreadY, 0f);
-        return spreadRotation * forward;
-    }
 
     private void StartReload()
     {

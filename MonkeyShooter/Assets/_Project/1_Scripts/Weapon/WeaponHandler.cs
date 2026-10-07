@@ -16,41 +16,43 @@ public class WeaponHandler
 
     private WeaponEffectsService _effectsService;
 
+    private CameraRecoil _cameraRecoil;
+
     public WeaponHandler(Transform cameraTransform, Transform weaponContainer)
     {
         _cameraTransform = cameraTransform ?? throw new ArgumentNullException(nameof(cameraTransform));
         _weaponContainer = weaponContainer ?? throw new ArgumentNullException(nameof(weaponContainer));
         _effectsService = ServiceLocator.Get<WeaponEffectsService>();
+        _cameraRecoil = new CameraRecoil(cameraTransform);
     }
 
     public void EquipWeapon(WeaponData newWeaponData)
+{
+    if (newWeaponData == null) 
+            return;
+       
+    UnsubscribeCurrentWeapon();
+
+    if (_currentWeaponView != null)
     {
-        if (newWeaponData == null) return;
+        UnityEngine.Object.Destroy(_currentWeaponView.gameObject);
+    }
 
-        // 1. Отписываемся и уничтожаем старый визуал
-        UnsubscribeCurrentWeapon();
+    _currentWeaponLogic = new HitscanWeapon(newWeaponData);
 
-        if (_currentWeaponView != null)
-        {
-            UnityEngine.Object.Destroy(_currentWeaponView.gameObject);
+    if (newWeaponData.WeaponViewPrefab != null)
+    {
+        _currentWeaponView = UnityEngine.Object.Instantiate(newWeaponData.WeaponViewPrefab, _weaponContainer);
+        _currentWeaponView.transform.localPosition = Vector3.zero;
+        _currentWeaponView.transform.localRotation = Quaternion.identity;
+
+            // Инициализируем конфиг отдачи визуала из данных оружия
+            _currentWeaponView.Init(newWeaponData.KickConfig);
         }
 
-        // 2. Создаем чистую логику
-        _currentWeaponLogic = new HitscanWeapon(newWeaponData);
-
-        // 3. Спавним новый визуал и привязываем к контейнеру у камеры
-        if (newWeaponData.WeaponViewPrefab != null)
-        {
-            _currentWeaponView = UnityEngine.Object.Instantiate(newWeaponData.WeaponViewPrefab, _weaponContainer);
-            _currentWeaponView.transform.localPosition = Vector3.zero;
-            _currentWeaponView.transform.localRotation = Quaternion.identity;
-        }
-
-        // 4. Подписываем визуал на события логики
         SubscribeCurrentWeapon();
-
-        // Уведомляем внешние сервисы (например, WeaponEffectsService) о смене ствола
-        OnWeaponChanged?.Invoke(_currentWeaponLogic);
+        // Обновляем конфиг отдачи камеры
+        _cameraRecoil?.SetConfig(newWeaponData.RecoilConfig);
     }
 
     public void ProcessInput(in CombatFrameInput combatInput)
@@ -58,6 +60,7 @@ public class WeaponHandler
         Transform shootOrigin = _cameraTransform;
 
         _currentWeaponLogic?.ProcessInput(combatInput, shootOrigin);
+        _cameraRecoil.Update(Time.deltaTime);
     }
 
     private void SubscribeCurrentWeapon()
@@ -80,5 +83,6 @@ public class WeaponHandler
     {
         _currentWeaponView.PlayShootEffects();
         _effectsService.HandleShot(hitInfo);
+        _cameraRecoil.GenerateRecoil();
     }
 }
