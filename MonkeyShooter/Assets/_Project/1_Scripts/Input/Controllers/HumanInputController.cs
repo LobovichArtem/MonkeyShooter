@@ -1,54 +1,59 @@
+using System;
 using UnityEngine;
 
+[RequireComponent(typeof(CharacterMover))]
 public class HumanInputController : MonoBehaviour
 {
+    [SerializeField] private WeaponEffectsService _effectsService;
+
+    [SerializeField] private Transform _cameraTransform;
+    [SerializeField] private Transform _aimTransform;
+    [SerializeField] private Transform _weaponContainer;
+    [SerializeField] private MouseLookSettigns _mouseLookSettings;
     [SerializeField] private MovementConfig _config;
 
-    [SerializeField] private CharacterMover _mover;
-    [SerializeField] private Transform _cameraTransform;
-
-    [SerializeField] private MouseLookSettigns _mouseLookSettings;
-
-    private MovementStateMachine _stateMachine;
     private HumanInput _humanInput;
     private MouseLook _mouseLook;
+    private PlayerMovement _playerMovement;
+    private WeaponHandler _weaponHandler; 
 
     private float _jumpBufferTimer;
 
-    public void Construct(HumanInput humanInput)
-    {
-        _humanInput = humanInput;
-        _humanInput.EnableControl();
-    }
-
-    private void Awake()
-    {
-        if (_cameraTransform == null && Camera.main != null)
-        {
-            _cameraTransform = Camera.main.transform;
-        }
-        InitializeStateMachine();
-    }
-
     private void Start()
     {
-        var input = new HumanInput();
-        Construct(input);
+        if (_cameraTransform == null || _mouseLookSettings == null || _config == null)
+        {
+            throw new NullReferenceException();
+        }
+    
+        InitializeInput();
 
+        InitializeMouseLook();
+        InitializeMovement();
+        InitializeCombat();
+    }
+
+    private void InitializeMovement()
+    {
+        var mover = GetComponent<CharacterMover>();
+        mover.Initialize(_config);
+        _playerMovement = new PlayerMovement(_config, mover);
+        _playerMovement.InitializeStateMachine();
+    }
+
+    private void InitializeMouseLook()
+    {
         _mouseLook = new MouseLook(_cameraTransform, _mouseLookSettings);
     }
 
-    private void InitializeStateMachine()
+    private void InitializeInput()
     {
-        _stateMachine = new MovementStateMachine();
-
-        var airborneState = new AirborneState(_mover, _config, _stateMachine);
-        var groundedState = new GroundedState(_mover, _config, _stateMachine, airborneState);
-        var wallLatchState = new WallLatchState(_mover, _config, _stateMachine);
-        airborneState.SetGroundedState(groundedState);
-        airborneState.SetWallLatchState(wallLatchState);
-        wallLatchState.SetStates(airborneState, groundedState);
-        _stateMachine.Initialize(groundedState);
+        _humanInput = new HumanInput();
+        _humanInput.EnableControl();
+    }
+    private void InitializeCombat()
+    {
+        _weaponHandler = new WeaponHandler(_aimTransform, _weaponContainer);
     }
 
     private void Update()
@@ -60,34 +65,43 @@ public class HumanInputController : MonoBehaviour
 
         _mouseLook.UpdateLook(inputData.Look.x, inputData.Look.y);
 
-        // 1. Обновление таймера буфера прыжка
+        // 1. Формируем движение
         if (inputData.IsJump)
         {
             _jumpBufferTimer = Time.time + _config.JumpBufferTime;
         }
 
-        // 2. Расчет направления движения относительно поворота камеры
         Vector3 forward = _cameraTransform.forward;
         Vector3 right = _cameraTransform.right;
-
         forward.y = 0f;
         right.y = 0f;
-
         forward.Normalize();
         right.Normalize();
 
         Vector3 moveDirection = forward * inputData.Move.y + right * inputData.Move.x;
 
-        // 3. Упаковка в кадровую структуру (флаг активен, пока запущен таймер буфера)
-        var frameInput = new MovementFrameInput
+        var movementInput = new MovementFrameInput
         {
             MoveDirection = moveDirection,
             LookDirection = forward,
             IsJumpRequested = Time.time < _jumpBufferTimer
         };
 
-        // 4. Обновление стейт-машины
-        _stateMachine.Update(frameInput);
+        // Отправляем ввод в сервис движения
+        _playerMovement.ProcessInput(movementInput);
+
+        var combatInput = new CombatFrameInput
+        {
+            IsFirePressed = inputData.IsAction,
+            IsFireHeld = inputData.IsActionHeld,
+            IsReloadRequested = inputData.IsReloadPressed
+        };
+
+        _weaponHandler.ProcessInput(combatInput);
     }
 
+    public void SelectWeapon(WeaponData weaponData)
+    {
+        _weaponHandler.EquipWeapon(weaponData);
+    }
 }

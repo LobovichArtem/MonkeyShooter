@@ -1669,6 +1669,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &233830467
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 233830468}
+  m_Layer: 0
+  m_Name: aimTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &233830468
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233830467}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1720549119}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &404763430
 GameObject:
   m_ObjectHideFlags: 0
@@ -3137,6 +3168,53 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!1 &1129041418
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1129041420}
+  - component: {fileID: 1129041419}
+  m_Layer: 0
+  m_Name: WeaponEffects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1129041419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1129041418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a15a854f437a10d4e838a40d3b0b4257, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponEffectsService
+  _markerType: 0
+  _markerScale: 0.2
+  _destroyDelay: 5
+--- !u!4 &1129041420
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1129041418}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1154769520
 GameObject:
   m_ObjectHideFlags: 0
@@ -5407,7 +5485,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 233830468}
   m_Father: {fileID: 1826793494}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1758208382
@@ -5779,7 +5858,7 @@ GameObject:
   - component: {fileID: 1826793490}
   - component: {fileID: 1826793489}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5797,8 +5876,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0144290acfa4fe7489b9f89f63912c81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterMover
-  <Controller>k__BackingField: {fileID: 1826793491}
-  _config: {fileID: 11400000, guid: 22494023856ea5540bf932dccf0795d1, type: 2}
 --- !u!114 &1826793490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5811,10 +5888,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f953e6118aba0524e9ac68b12636cf62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HumanInputController
-  _config: {fileID: 11400000, guid: 22494023856ea5540bf932dccf0795d1, type: 2}
-  _mover: {fileID: 1826793489}
+  _effectsService: {fileID: 1129041419}
   _cameraTransform: {fileID: 1720549119}
+  _aimTransform: {fileID: 233830468}
   _mouseLookSettings: {fileID: 11400000, guid: c53a74a5544cd154bb4c1fd153d128ab, type: 2}
+  _config: {fileID: 11400000, guid: 22494023856ea5540bf932dccf0795d1, type: 2}
+  _weaponData: {fileID: 11400000, guid: ec4560a9a3548734abb0eb28e0448d1c, type: 2}
 --- !u!143 &1826793491
 CharacterController:
   m_ObjectHideFlags: 0
@@ -6536,3 +6615,4 @@ SceneRoots:
   - {fileID: 1232761401}
   - {fileID: 46601334}
   - {fileID: 858115516}
+  - {fileID: 1129041420}

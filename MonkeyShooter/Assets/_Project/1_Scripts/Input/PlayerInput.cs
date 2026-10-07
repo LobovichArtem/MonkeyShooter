@@ -734,6 +734,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""93db7b9b-b65c-4913-b46d-2b2a3f4df84f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1240,6 +1249,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""83ad3321-58b9-488c-b895-d750246d6a6f"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Reload"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -2293,6 +2313,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Human_Interact = m_Human.FindAction("Interact", throwIfNotFound: true);
         m_Human_SlotSelected = m_Human.FindAction("SlotSelected", throwIfNotFound: true);
         m_Human_Inventory = m_Human.FindAction("Inventory", throwIfNotFound: true);
+        m_Human_Reload = m_Human.FindAction("Reload", throwIfNotFound: true);
         // Vehicle
         m_Vehicle = asset.FindActionMap("Vehicle", throwIfNotFound: true);
         m_Vehicle_Move = m_Vehicle.FindAction("Move", throwIfNotFound: true);
@@ -2704,6 +2725,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Human_Interact;
     private readonly InputAction m_Human_SlotSelected;
     private readonly InputAction m_Human_Inventory;
+    private readonly InputAction m_Human_Reload;
     /// <summary>
     /// Provides access to input actions defined in input action map "Human".
     /// </summary>
@@ -2759,6 +2781,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Human/Inventory".
         /// </summary>
         public InputAction @Inventory => m_Wrapper.m_Human_Inventory;
+        /// <summary>
+        /// Provides access to the underlying input action "Human/Reload".
+        /// </summary>
+        public InputAction @Reload => m_Wrapper.m_Human_Reload;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -2818,6 +2844,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Inventory.started += instance.OnInventory;
             @Inventory.performed += instance.OnInventory;
             @Inventory.canceled += instance.OnInventory;
+            @Reload.started += instance.OnReload;
+            @Reload.performed += instance.OnReload;
+            @Reload.canceled += instance.OnReload;
         }
 
         /// <summary>
@@ -2862,6 +2891,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Inventory.started -= instance.OnInventory;
             @Inventory.performed -= instance.OnInventory;
             @Inventory.canceled -= instance.OnInventory;
+            @Reload.started -= instance.OnReload;
+            @Reload.performed -= instance.OnReload;
+            @Reload.canceled -= instance.OnReload;
         }
 
         /// <summary>
@@ -3590,6 +3622,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnInventory(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Reload" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnReload(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Vehicle" which allows adding and removing callbacks.

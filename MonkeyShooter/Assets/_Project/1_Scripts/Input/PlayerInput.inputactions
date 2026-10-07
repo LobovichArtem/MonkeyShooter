@@ -648,6 +648,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Reload",
+                    "type": "Button",
+                    "id": "93db7b9b-b65c-4913-b46d-2b2a3f4df84f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1154,6 +1163,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "83ad3321-58b9-488c-b895-d750246d6a6f",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Reload",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -26,3 +26,5 @@ MonoBehaviour:
   <AirImpulseWindow>k__BackingField: 0.25
   <JumpBufferTime>k__BackingField: 0.15
   <WallLatchDuration>k__BackingField: 1
+  <WallLatchGravitatyMultiplier>k__BackingField: 0.05
+  <WallLatchCount>k__BackingField: 2

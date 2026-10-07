@@ -11,6 +11,8 @@ public struct HumanInputData : IInputData
     public bool IsCrouch;
     public float Scroll;
     public bool IsAction;
+    public bool IsActionHeld;
+    public bool IsReloadPressed;
     public bool IsAltAction;
     public bool IsInteract;
     public float SlotSelected;

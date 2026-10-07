@@ -19,8 +19,7 @@ public class HumanPacker : InputPacker<HumanInputData>
     private InputAction _altAction;
     private InputAction _interact;
     private InputAction _slotSelected;
-    private InputAction _radio;
-    private InputAction _measuring;
+    private InputAction _reload;
     private InputAction _inventory;
 
     public override void Initialize(InputActionMap map)
@@ -35,8 +34,7 @@ public class HumanPacker : InputPacker<HumanInputData>
         _altAction ??= map.FindAction("AltAction");
         _interact ??= map.FindAction("Interact");
         _slotSelected ??= map.FindAction("SlotSelected");
-        _radio ??= map.FindAction("Radio");
-        _measuring ??= map.FindAction("Measuring");
+        _reload ??= map.FindAction("Reload");
         _inventory ??= map.FindAction("Inventory");
     }
 
@@ -52,7 +50,9 @@ public class HumanPacker : InputPacker<HumanInputData>
             IsCrouch = _crouch.IsPressed(),
             Scroll = _scroll.ReadValue<Vector2>().y,
             IsAction = _action.triggered,
+            IsActionHeld = _action.IsPressed(),
             IsAltAction = _altAction.triggered, 
+            IsReloadPressed = _reload.IsPressed(),
             IsInteract = _interact.triggered,
             SlotSelected = _slotSelected.ReadValue<float>(),
             IsInventory = _inventory.triggered

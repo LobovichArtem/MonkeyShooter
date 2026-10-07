@@ -3,8 +3,8 @@
 [RequireComponent(typeof(CharacterController))]
 public class CharacterMover : MonoBehaviour, IImpulseReceiver
 {
-    [field: SerializeField] public CharacterController Controller { get; private set; }
-    [field: SerializeField] private MovementConfig _config;
+    public CharacterController Controller { get; private set; }
+    public MovementConfig Config { get; private set;  }
 
     private Vector3 _externalVelocity;
     private Vector3 _horizontalVelocity;
@@ -20,19 +20,11 @@ public class CharacterMover : MonoBehaviour, IImpulseReceiver
 
     public bool IsTouchingWall => Time.time - _lastWallContactTime < 0.1f; // Актуальность контакта (100 мс)
 
-    public MovementConfig Config => _config;
     public bool IsGrounded => Controller.isGrounded;
     public Vector3 HorizontalVelocity => _horizontalVelocity;
     public float VerticalVelocity => _verticalVelocity;
 
-    private void Awake()
-    {
-        if (_config != null)
-        {
-            _currentMass = _config.BaseMass;
-            _gravityMultiplier = _config.DefaultGravityMultiplier;
-        }
-    }
+
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         // Проверяем, что касаемся стены (угол нормали к Y близок к 0)
@@ -44,11 +36,12 @@ public class CharacterMover : MonoBehaviour, IImpulseReceiver
         }
     }
 
-    public void SetConfig(MovementConfig config)
+    public void Initialize(MovementConfig config)
     {
-        _config = config;
-        _currentMass = _config.BaseMass;
-        _gravityMultiplier = _config.DefaultGravityMultiplier;
+        Config = config;
+        _currentMass = Config.BaseMass;
+        _gravityMultiplier = Config.DefaultGravityMultiplier;
+        Controller = GetComponent<CharacterController>();
     }
 
     // Состояния напрямую задают или сглаживают целевую горизонтальную скорость
@@ -69,7 +62,7 @@ public class CharacterMover : MonoBehaviour, IImpulseReceiver
 
     public void ResetGravityMultiplier()
     {
-        _gravityMultiplier = _config.DefaultGravityMultiplier;
+        _gravityMultiplier = Config.DefaultGravityMultiplier;
     }
 
     public void Jump(float jumpForce)
@@ -82,7 +75,7 @@ public class CharacterMover : MonoBehaviour, IImpulseReceiver
 
     public void AddImpulse(Vector3 impulse)
     {
-        float effectiveMass = Mathf.Max(_currentMass, _config.MinMassThreshold);
+        float effectiveMass = Mathf.Max(_currentMass, Config.MinMassThreshold);
         Vector3 processedImpulse = impulse / effectiveMass;
 
         // Если падаем и получаем импульс вверх — гасим падение до 0
@@ -128,8 +121,8 @@ public class CharacterMover : MonoBehaviour, IImpulseReceiver
         Controller.Move(finalVelocity * Time.deltaTime);
 
         // Гашение внешнего импульса
-        float effectiveMass = Mathf.Max(_currentMass, _config.MinMassThreshold);
-        float damping = (_config.ImpulseDampingRate / effectiveMass) * Time.deltaTime;
+        float effectiveMass = Mathf.Max(_currentMass, Config.MinMassThreshold);
+        float damping = (Config.ImpulseDampingRate / effectiveMass) * Time.deltaTime;
         _externalVelocity = Vector3.Lerp(_externalVelocity, Vector3.zero, damping);
     }
 
@@ -137,7 +130,7 @@ public class CharacterMover : MonoBehaviour, IImpulseReceiver
     {
         if (IsGrounded && _verticalVelocity < 0)
         {
-            _verticalVelocity = _config.GroundedStickForce;
+            _verticalVelocity = Config.GroundedStickForce;
         }
 
         float gravity = Physics.gravity.y * _gravityMultiplier;
