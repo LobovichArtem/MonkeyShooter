@@ -1,33 +1,23 @@
 ﻿using System;
 
-public abstract class BaseInput<T, P> : IControllable
+public abstract class BaseInput<T, P> 
     where T : IInputData
     where P : InputPacker<T>, new()
 {
-    public abstract string RequiredActionMap { get; }
-    public bool IsActive => InputService != null;
 
-    public InputService InputService { get; private set; }
     protected readonly P _packer = new();
 
     public event Action OnEnableControl;
     public event Action OnDisableControl;
 
-    public BaseInput()
+    public BaseInput(P packer)
     {
-        InputService = ServiceLocator.Get<InputService>();
-        DisableControl();
+        _packer = packer;
     }
 
     public virtual void EnableControl()
     {
-        var map = InputService.GetMap(RequiredActionMap);
-        if (map != null)
-        {
-            _packer.Initialize(map);
-        }
         OnEnableControl?.Invoke();
-
     }
 
     public virtual void DisableControl()
@@ -37,11 +27,9 @@ public abstract class BaseInput<T, P> : IControllable
 
     public T GetInput()
     {
-        if (InputService == null) 
+        if (_packer == null) 
             return default;
-
         return _packer.Pack();
-
     }
 
 }

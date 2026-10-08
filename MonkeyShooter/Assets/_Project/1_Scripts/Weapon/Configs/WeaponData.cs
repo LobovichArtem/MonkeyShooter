@@ -8,10 +8,12 @@ public class WeaponData : ScriptableObject
 
     [field: Header("Damage & Range")]
     [field: SerializeField] public float BaseDamage { get; private set; } = 30f;
+    [field: SerializeField] public float Penetration { get; private set; } = 10f;
     [field: SerializeField] public float MinDamage { get; private set; } = 10f;
     [field: SerializeField] public float EffectiveDistance { get; private set; } = 15f; // До этой дистанции — BaseDamage
     [field: SerializeField] public float MaxDistance { get; private set; } = 50f;      // Дистанция сниженного/нулевого урона
-
+    [field: SerializeField] public float ImpactForce = 25;
+   
     [field: Header("Fire Rate & Mode")]
     [field: SerializeField] public float FireRate { get; private set; } = 600f; // Выстрелов в минуту (RPM)
     [field: SerializeField] public bool IsAutomatic { get; private set; } = true;

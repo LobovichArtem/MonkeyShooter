@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponDataSO
   <WeaponViewPrefab>k__BackingField: {fileID: 1191181460738334986, guid: 06ce564238050fe4a8d3d765cc5a6ee2, type: 3}
   <BaseDamage>k__BackingField: 30
+  <Penetration>k__BackingField: 60
   <MinDamage>k__BackingField: 10
   <EffectiveDistance>k__BackingField: 15
   <MaxDistance>k__BackingField: 50
+  ImpactForce: 25
   <FireRate>k__BackingField: 600
   <IsAutomatic>k__BackingField: 1
   <MagazineSize>k__BackingField: 30

@@ -49,7 +49,7 @@ public class HumanInputController : MonoBehaviour
 
     private void InitializeInput()
     {
-        _humanInput = new HumanInput();
+        _humanInput = ServiceLocator.Get<InputService>().HumanInput as HumanInput;
         _humanInput.EnableControl();
     }
     private void InitializeCombat()
@@ -59,7 +59,7 @@ public class HumanInputController : MonoBehaviour
 
     private void Update()
     {
-        if (_humanInput == null || !_humanInput.IsActive)
+        if (_humanInput == null)
             return;
 
         HumanInputData inputData = _humanInput.GetInput();
@@ -103,6 +103,8 @@ public class HumanInputController : MonoBehaviour
 
     public void SelectWeapon(WeaponData weaponData)
     {
+        if(weaponData == null)
+            return;
         _weaponHandler.EquipWeapon(weaponData);
     }
 }

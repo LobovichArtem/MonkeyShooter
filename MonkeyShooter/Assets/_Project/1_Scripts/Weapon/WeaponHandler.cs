@@ -27,24 +27,24 @@ public class WeaponHandler
     }
 
     public void EquipWeapon(WeaponData newWeaponData)
-{
-    if (newWeaponData == null) 
+    {
+        if (newWeaponData == null)
             return;
-       
-    UnsubscribeCurrentWeapon();
 
-    if (_currentWeaponView != null)
-    {
-        UnityEngine.Object.Destroy(_currentWeaponView.gameObject);
-    }
+        UnsubscribeCurrentWeapon();
 
-    _currentWeaponLogic = new HitscanWeapon(newWeaponData);
+        if (_currentWeaponView != null)
+        {
+            UnityEngine.Object.Destroy(_currentWeaponView.gameObject);
+        }
 
-    if (newWeaponData.WeaponViewPrefab != null)
-    {
-        _currentWeaponView = UnityEngine.Object.Instantiate(newWeaponData.WeaponViewPrefab, _weaponContainer);
-        _currentWeaponView.transform.localPosition = Vector3.zero;
-        _currentWeaponView.transform.localRotation = Quaternion.identity;
+        _currentWeaponLogic = new HitscanWeapon(newWeaponData, _cameraTransform);
+
+        if (newWeaponData.WeaponViewPrefab != null)
+        {
+            _currentWeaponView = UnityEngine.Object.Instantiate(newWeaponData.WeaponViewPrefab, _weaponContainer);
+            _currentWeaponView.transform.localPosition = Vector3.zero;
+            _currentWeaponView.transform.localRotation = Quaternion.identity;
 
             // Инициализируем конфиг отдачи визуала из данных оружия
             _currentWeaponView.Init(newWeaponData.KickConfig);
@@ -57,9 +57,7 @@ public class WeaponHandler
 
     public void ProcessInput(in CombatFrameInput combatInput)
     {
-        Transform shootOrigin = _cameraTransform;
-
-        _currentWeaponLogic?.ProcessInput(combatInput, shootOrigin);
+        _currentWeaponLogic?.ProcessInput(combatInput);
         _cameraRecoil.Update(Time.deltaTime);
     }
 
@@ -68,6 +66,7 @@ public class WeaponHandler
         if (_currentWeaponLogic == null || _currentWeaponView == null) return;
 
         _currentWeaponLogic.OnShot += HandleShot;
+        _currentWeaponLogic.OnHit += HandleHit;
         _currentWeaponLogic.OnReloadStarted += _currentWeaponView.PlayReloadAnimation;
     }
 
@@ -76,13 +75,18 @@ public class WeaponHandler
         if (_currentWeaponLogic == null || _currentWeaponView == null) return;
 
         _currentWeaponLogic.OnShot -= HandleShot;
+        _currentWeaponLogic.OnHit -= HandleHit;
         _currentWeaponLogic.OnReloadStarted -= _currentWeaponView.PlayReloadAnimation;
     }
 
-    private void HandleShot(HitscanHitInfo hitInfo)
+    private void HandleShot()
     {
         _currentWeaponView.PlayShootEffects();
-        _effectsService.HandleShot(hitInfo);
         _cameraRecoil.GenerateRecoil();
+    }
+
+    private void HandleHit(HitscanHitInfo hitInfo)
+    {
+        _effectsService.HandleHit(hitInfo);
     }
 }

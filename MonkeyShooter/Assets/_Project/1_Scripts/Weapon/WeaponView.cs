@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class WeaponView : MonoBehaviour
 {
+    [field: SerializeField] public WeaponData WeaponData {  get; private set; }
     [field: SerializeField] public Transform FirePoint { get; private set; }
 
     [Header("Procedural Recoil Container")]

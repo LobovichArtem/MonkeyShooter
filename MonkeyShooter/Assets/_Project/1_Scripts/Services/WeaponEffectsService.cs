@@ -16,14 +16,11 @@ public class WeaponEffectsService : MonoBehaviour
         ServiceLocator.Unregister<WeaponEffectsService>();
     }
 
-    public void HandleShot(HitscanHitInfo hitInfo)
+    public void HandleHit(HitscanHitInfo hitInfo)
     {
-        if (!hitInfo.DidHit)
-            return;
-
         // Временный спавн тестовой сферы
         GameObject marker = GameObject.CreatePrimitive(_markerType);
-        marker.transform.position = hitInfo.HitPoint;
+        marker.transform.position = hitInfo.Point;
         marker.transform.localScale = Vector3.one * _markerScale;
 
         // Отключаем коллайдер, чтобы тестовые сферы не мешали дальнейшим Raycast
