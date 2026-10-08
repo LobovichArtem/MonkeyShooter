@@ -45,7 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6c3f04353f92be45bcfdbd2d46a99d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponView
+  <WeaponData>k__BackingField: {fileID: 11400000, guid: 917db1fbb56f2cb4792a48c0d86fc380, type: 2}
   <FirePoint>k__BackingField: {fileID: 0}
+  _recoilContainer: {fileID: 0}
   _animator: {fileID: 0}
   _muzzleFlash: {fileID: 0}
   _audioSource: {fileID: 0}
@@ -345,8 +347,8 @@ Transform:
   m_GameObject: {fileID: 4304334419280890232}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0.00000058114523}
-  m_LocalPosition: {x: 0.182, y: -0.305, z: 0.524}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.182, y: -0.031, z: 0.152}
+  m_LocalScale: {x: 0.37775, y: 0.37775, z: 0.37775}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 244606482573128268}

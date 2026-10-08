@@ -1263,7 +1263,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6c3f04353f92be45bcfdbd2d46a99d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponView
+  <WeaponData>k__BackingField: {fileID: 11400000, guid: ec4560a9a3548734abb0eb28e0448d1c, type: 2}
   <FirePoint>k__BackingField: {fileID: 0}
+  _recoilContainer: {fileID: 0}
   _animator: {fileID: 0}
   _muzzleFlash: {fileID: 0}
   _audioSource: {fileID: 0}
