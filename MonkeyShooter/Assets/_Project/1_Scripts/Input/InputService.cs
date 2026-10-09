@@ -3,17 +3,14 @@ using UnityEngine.InputSystem;
 
 public class InputService
 {
-    private readonly PlayerInput _actions;
-
-    [field: SerializeField]
-    public InputActionMap CurrentMap { get; private set; }
+    private readonly PlayerInput _input;
 
     public InputActionMap GeneralMap { get; private set; }
     public BaseInput<HumanInputData, HumanPacker> HumanInput {  get; private set; }
     public InputService()
     {
-        _actions = new PlayerInput();
-        _actions.Enable();
+        _input = new PlayerInput();
+        _input.Enable();
 
         GeneralMap = GetMap("General");
         GeneralMap.Enable();
@@ -43,6 +40,6 @@ public class InputService
     // Метод для получения карты без её активации (нужен для инициализации пакеров)
     private InputActionMap GetMap(string mapName)
     {
-        return _actions.asset.FindActionMap(mapName);
+        return _input.asset.FindActionMap(mapName);
     }
 }

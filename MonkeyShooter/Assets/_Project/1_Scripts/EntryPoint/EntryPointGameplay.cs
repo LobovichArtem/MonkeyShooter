@@ -10,6 +10,10 @@ public class EntryPointGameplay : EntryPointBase
 
         var inputService = new InputService();
         ServiceLocator.Register(inputService);
+
+        var windowService = new WindowsService();
+        windowService.Initialize(true);
+        ServiceLocator.Register(windowService);
     }
 
 }

@@ -79,7 +79,10 @@ public class HumanInputController : MonoBehaviour
         forward.Normalize();
         right.Normalize();
 
-        Vector3 moveDirection = forward * inputData.Move.y + right * inputData.Move.x;
+        Vector2 moveInput = new Vector2(inputData.Move.x, inputData.Move.y);
+        moveInput = Vector3.ClampMagnitude(moveInput, 1f); // Ограничиваем длину единицей
+
+        Vector3 moveDirection = forward * moveInput.y + right * moveInput.x;
 
         var movementInput = new MovementFrameInput
         {

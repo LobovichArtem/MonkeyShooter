@@ -13,9 +13,7 @@ public class CharacterMover : MonoBehaviour, IImpulseReceiver
     private float _currentMass;
     private float _gravityMultiplier;
 
-    // Храним данные последнего контакта со стеной
-    private Vector3 _lastWallNormal;
-    private Vector3 _lastWallContactPoint;
+
     private float _lastWallContactTime;
 
     public bool IsTouchingWall => Time.time - _lastWallContactTime < 0.1f; // Актуальность контакта (100 мс)
@@ -30,8 +28,6 @@ public class CharacterMover : MonoBehaviour, IImpulseReceiver
         // Проверяем, что касаемся стены (угол нормали к Y близок к 0)
         if (Mathf.Abs(hit.normal.y) < 0.3f)
         {
-            _lastWallNormal = hit.normal;
-            _lastWallContactPoint = hit.point;
             _lastWallContactTime = Time.time;
         }
     }
@@ -87,22 +83,22 @@ public class CharacterMover : MonoBehaviour, IImpulseReceiver
         _externalVelocity += processedImpulse;
     }
 
-    public bool TryGetWallBounceDirection(out Vector3 bounceDirection)
-    {
-        bounceDirection = Vector3.zero;
+    //public bool TryGetWallBounceDirection(out Vector3 bounceDirection)
+    //{
+    //    bounceDirection = Vector3.zero;
 
-        if (!IsTouchingWall)
-            return false;
+    //    if (!IsTouchingWall)
+    //        return false;
 
-        // Вектор от точки коллизии к центру контроллера
-        Vector3 centerPos = transform.position + Vector3.up * (Controller.height * 0.5f);
-        Vector3 directionFromHit = (centerPos - _lastWallContactPoint).normalized;
-        directionFromHit.y = 0f;
+    //    // Вектор от точки коллизии к центру контроллера
+    //    Vector3 centerPos = transform.position + Vector3.up * (Controller.height * 0.5f);
+    //    Vector3 directionFromHit = (centerPos - _lastWallContactPoint).normalized;
+    //    directionFromHit.y = 0f;
 
-        // Комбинируем нормаль стены и вектор от точки контакта
-        bounceDirection = (_lastWallNormal + directionFromHit).normalized;
-        return true;
-    }
+    //    // Комбинируем нормаль стены и вектор от точки контакта
+    //    bounceDirection = (_lastWallNormal + directionFromHit).normalized;
+    //    return true;
+    //}
 
 
 

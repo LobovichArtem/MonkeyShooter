@@ -52,7 +52,7 @@ public class WallLatchState : IMovementState
         }
 
         // 2. Каждый кадр зависания сбрасываем гравитацию и движение
-        _mover.SetHorizontalVelocity(Vector3.zero);
+        //_mover.SetHorizontalVelocity(Vector3.zero);
 
         // 3. Отскок при нажатии прыжка
         if (input.IsJumpRequested)
@@ -79,8 +79,11 @@ public class WallLatchState : IMovementState
 
         Vector3 jumpDirection = lookDirection.normalized;
 
-        // 1. Устанавливаем четкую горизонтальную скорость от стены
-        _mover.SetHorizontalVelocity(jumpDirection * _config.BaseMoveSpeed);
         _mover.SetVerticalVelocity(_config.JumpForce);
+
+        if (_mover.IsTouchingWall == false)
+            _mover.SetHorizontalVelocity(jumpDirection * _config.BaseMoveSpeed);
+        else
+            _mover.SetHorizontalVelocity(Vector3.zero);
     }
 }

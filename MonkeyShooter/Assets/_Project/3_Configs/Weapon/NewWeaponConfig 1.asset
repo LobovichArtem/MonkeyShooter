@@ -18,11 +18,12 @@ MonoBehaviour:
   <MinDamage>k__BackingField: 10
   <EffectiveDistance>k__BackingField: 15
   <MaxDistance>k__BackingField: 50
-  ImpactForce: 25
-  <FireRate>k__BackingField: 600
+  <ImpactForce>k__BackingField: 25
+  <PelletCount>k__BackingField: 1
+  <SpreadAngle>k__BackingField: 0
+  <FireRate>k__BackingField: 1200
   <IsAutomatic>k__BackingField: 1
   <MagazineSize>k__BackingField: 30
   <ReloadTime>k__BackingField: 1.8
-  <SpreadAngle>k__BackingField: 1.5
   <RecoilConfig>k__BackingField: {fileID: 11400000, guid: edeb87e4ed898a24fa0e330931baa78b, type: 2}
   <KickConfig>k__BackingField: {fileID: 11400000, guid: ba7b8cbd69048cd4ea1a7ae4be91e7ea, type: 2}

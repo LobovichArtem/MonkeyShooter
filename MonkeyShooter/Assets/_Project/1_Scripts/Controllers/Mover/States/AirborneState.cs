@@ -42,9 +42,9 @@ public class AirborneState : IMovementState
         }
 
 
-        if (_mover.VerticalVelocity <= 0f && _mover.IsTouchingWall)
+        if (_mover.IsTouchingWall)
         {
-            if (_currentLatchCount < _config.WallLatchCount)
+            if (_mover.VerticalVelocity <= 0f && _currentLatchCount < _config.WallLatchCount)
             {
                 _currentLatchCount++;
                 _stateMachine.ChangeState(_wallLatchState);
@@ -57,11 +57,22 @@ public class AirborneState : IMovementState
 
         if (input.MoveDirection != Vector3.zero)
         {
-            Vector3 localDir = _mover.transform.InverseTransformDirection(input.MoveDirection);
-            localDir.z *= _config.AirForwardMultiplier;
-            localDir.x *= _config.AirStrafeMultiplier;
+            // Вместо _mover.transform используем LookDirection (взгляд камеры по горизонтали)
+            // Либо вычисляем локальные оси на основе input.LookDirection
+            Vector3 lookForward = input.LookDirection;
+            lookForward.y = 0f;
+            lookForward.Normalize();
+            Vector3 lookRight = Vector3.Cross(Vector3.up, lookForward);
 
-            Vector3 wishDir = _mover.transform.TransformDirection(localDir).normalized;
+            // Переводим мировой ввод в локальные оси камеры
+            float forwardAmount = Vector3.Dot(input.MoveDirection, lookForward);
+            float strafeAmount = Vector3.Dot(input.MoveDirection, lookRight);
+
+            forwardAmount *= _config.AirForwardMultiplier;
+            strafeAmount *= _config.AirStrafeMultiplier;
+
+            // Собираем обратно желаемое направление движения с учетом множителей
+            Vector3 wishDir = (lookForward * forwardAmount + lookRight * strafeAmount).normalized;
 
             float currentSpeed = currentVelocity.magnitude;
             Vector3 currentDir = currentSpeed > 0.001f ? currentVelocity / currentSpeed : wishDir;
