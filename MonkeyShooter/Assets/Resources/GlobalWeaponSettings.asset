@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee15ec59c40b58145aed4dd6210ebbe0, type: 3}
   m_Name: GlobalWeaponSettings
   m_EditorClassIdentifier: Assembly-CSharp::GlobalWeaponSettings
-  WeaponHitscanLayer:
+  <WeaponHitscanLayer>k__BackingField:
     serializedVersion: 2
-    m_Bits: 1
-  PhysicsImpactMultiplier: 10
+    m_Bits: 119
+  <PhysicsImpactMultiplier>k__BackingField: 10

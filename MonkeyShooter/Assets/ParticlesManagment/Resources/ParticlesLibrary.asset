@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14a1993dc9bda6b4ba541052a2e86c3f, type: 3}
+  m_Name: ParticlesLibrary
+  m_EditorClassIdentifier: Assembly-CSharp::ParticlesLibrary
+  _particles:
+  - <Key>k__BackingField: concrete_hit
+    <Prefab>k__BackingField: {fileID: 2313352469407994264, guid: 5261d1db02095d34eba4ffe23bf11853, type: 3}
+  - <Key>k__BackingField: metall_hit
+    <Prefab>k__BackingField: {fileID: 767045059834234319, guid: e82c88e81fc269a4782fc601322c199e, type: 3}

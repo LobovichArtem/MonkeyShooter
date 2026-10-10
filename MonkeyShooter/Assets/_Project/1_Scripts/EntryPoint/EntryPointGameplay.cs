@@ -14,6 +14,9 @@ public class EntryPointGameplay : EntryPointBase
         var windowService = new WindowsService();
         windowService.Initialize(true);
         ServiceLocator.Register(windowService);
+
+        var particles = new ParticlePrefabsLibrary();
+        ServiceLocator.Register(particles);
     }
 
 }

@@ -807,7 +807,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 46601328}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 4077f933cc5da144fa08ce54a007f5b5, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -3867,6 +3867,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -7657966619581158213, guid: 3ad6992d3315c8042915ced40b5535bd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 656216693}
+    - targetCorrespondingSourceObject: {fileID: -7657966619581158213, guid: 3ad6992d3315c8042915ced40b5535bd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 656216697}
     - targetCorrespondingSourceObject: {fileID: 8817898888258712963, guid: 3ad6992d3315c8042915ced40b5535bd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 636052995}
@@ -5570,6 +5573,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.14582324, y: 0.15970862, z: 0.13757807}
   m_Center: {x: 0.0012448, y: 0.094064236, z: 0.005612187}
+--- !u!4 &656216696 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -3480699329000672020, guid: 3ad6992d3315c8042915ced40b5535bd, type: 3}
+  m_PrefabInstance: {fileID: 419301407}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &656216697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 656216690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d709eed747dc9094ba94d47c6eb47bab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TransformImpackReceiver
+  _recoveryTime: 0.35
+  _maxHitPunchAngle: 35
+  _pivot: {fileID: 656216696}
 --- !u!1 &675101390 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1781356600409242780, guid: 3ad6992d3315c8042915ced40b5535bd, type: 3}
@@ -8648,9 +8671,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a15a854f437a10d4e838a40d3b0b4257, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponEffectsService
-  _markerType: 0
-  _markerScale: 0.03
-  _destroyDelay: 5
+  _particleTypes:
+  - <ParticleKey>k__BackingField:
+      _key: concrete_hit
+    <PhysicsMaterial>k__BackingField: {fileID: 13400000, guid: 4077f933cc5da144fa08ce54a007f5b5, type: 2}
+    <PrewarmCount>k__BackingField: 30
+  - <ParticleKey>k__BackingField:
+      _key: metall_hit
+    <PhysicsMaterial>k__BackingField: {fileID: 13400000, guid: a9af2899d54b80649a23d9cec45b5ba2, type: 2}
+    <PrewarmCount>k__BackingField: 30
+  _defaultCapacity: 15
+  _maxSize: 100
 --- !u!4 &1129041420
 Transform:
   m_ObjectHideFlags: 0
@@ -9240,7 +9271,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1232761395}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: a9af2899d54b80649a23d9cec45b5ba2, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -14643,7 +14674,7 @@ CharacterController:
     m_Bits: 0
   m_LayerOverridePriority: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Height: 1
   m_Radius: 0.25
@@ -15322,7 +15353,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1884227500}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: a9af2899d54b80649a23d9cec45b5ba2, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

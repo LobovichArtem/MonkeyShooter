@@ -57,7 +57,7 @@ public class TransformImpackReceiver : MonoBehaviour, IKnockbackable
         rotationAxis.Normalize();
 
         // 3. Вычисляем угол на основе силы удара и ограничиваем его максимальным значением _maxHitPunchAngle
-        float rawAngle = force.magnitude; // Коэффициент масштабирования силы (можно настроить)
+        float rawAngle = force.magnitude;
         float angle = Mathf.Clamp(rawAngle, 0f, _maxHitPunchAngle);
         
         Quaternion punchRotation = Quaternion.AngleAxis(angle, _pivot.InverseTransformDirection(rotationAxis));
