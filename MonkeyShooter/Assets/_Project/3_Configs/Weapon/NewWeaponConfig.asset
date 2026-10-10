@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: NewWeaponConfig
   m_EditorClassIdentifier: Assembly-CSharp::WeaponDataSO
   <WeaponViewPrefab>k__BackingField: {fileID: 2103477748191617883, guid: c2af051c4f1e2114d877811f71ceecc0, type: 3}
-  <BaseDamage>k__BackingField: 20
-  <Penetration>k__BackingField: 10
+  <BaseDamage>k__BackingField: 50
+  <Penetration>k__BackingField: 50
   <MinDamage>k__BackingField: 10
   <EffectiveDistance>k__BackingField: 15
   <MaxDistance>k__BackingField: 50
-  <ImpactForce>k__BackingField: 25
+  <ImpactForce>k__BackingField: 100
   <PelletCount>k__BackingField: 1
   <SpreadAngle>k__BackingField: 0
   <FireRate>k__BackingField: 600

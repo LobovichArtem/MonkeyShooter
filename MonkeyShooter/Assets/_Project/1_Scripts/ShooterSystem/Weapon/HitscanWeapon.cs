@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class HitscanWeapon
@@ -23,13 +22,15 @@ public class HitscanWeapon
     public bool IsReloading => _reloadStartTime > 0f && Time.time < _reloadStartTime + _weaponData.ReloadTime;
 
     private const int _MAXHITS = 3;
-    private readonly RaycastHit[] _hitsBuffer = new RaycastHit[_MAXHITS]; 
+    private readonly RaycastHit[] _hitsBuffer = new RaycastHit[_MAXHITS];
+    private LayerMask _hitscanLayer;
 
     public HitscanWeapon(WeaponData data, Transform aimPoint)
     {
         _weaponData = data ?? throw new ArgumentNullException(nameof(data));
         _currentAmmo = _weaponData.MagazineSize;
         _aimPoint = aimPoint;
+        _hitscanLayer = GlobalWeaponSettings.Instance.WeaponHitscanLayer;
     }
 
     public void ProcessInput(in CombatFrameInput input)
@@ -94,30 +95,35 @@ public class HitscanWeapon
     {
         float currentPenetration = _weaponData.Penetration;
         float currentDamage = initialDamage;
-        Vector3 currentRayOrigin = origin;
 
-        if (Physics.Raycast(origin, direction, out RaycastHit initialHit, _weaponData.MaxDistance))
+        // Выполняем RaycastNonAlloc для получения всех попаданий луча за один вызов
+        int hitCount = Physics.RaycastNonAlloc(origin, direction, _hitsBuffer, _weaponData.MaxDistance, _hitscanLayer);
+        if (hitCount == 0)
+            return;
+
+        // Сортируем полученные хиты по расстоянию от точки выстрела, так как RaycastNonAlloc не гарантирует порядок
+        System.Array.Sort(_hitsBuffer, 0, hitCount, Comparer<RaycastHit>.Create((a, b) => a.distance.CompareTo(b.distance)));
+
+        // Рассчитываем начальный урон с учетом расстояния до первого попадания
+        float distance = _hitsBuffer[0].distance;
+        int pelletCount = Mathf.Max(1, _weaponData.PelletCount);
+        currentDamage = CalculateDamageByDistance(distance) / pelletCount;
+
+        // Коллекция для отслеживания уже пораженных персонажей в рамках этой пеллеты
+        HashSet<Transform> hitCharacters = new HashSet<Transform>();
+
+        int processedHits = 0;
+        for (int i = 0; i < hitCount && processedHits < _MAXHITS && currentPenetration > 0f; i++)
         {
-            float distance = Vector3.Distance(origin, initialHit.point);
-            int pelletCount = Mathf.Max(1, _weaponData.PelletCount);
-            currentDamage = CalculateDamageByDistance(distance) / pelletCount;
-        }
+            var hit = _hitsBuffer[i];
+            processedHits++;
 
-        int maxHits = 3;
-
-        while (currentPenetration > 0f && maxHits > 0)
-        {
-            maxHits--;
-
-            if (!Physics.Raycast(currentRayOrigin, direction, out RaycastHit hit, _weaponData.MaxDistance))
-            {
-                break;
-            }
-
+            Transform hitRoot = hit.collider.transform.root;
             bool hasDamageable = hit.collider.TryGetComponent<IDamageable>(out var damageable);
             bool hasProtectable = hit.collider.TryGetComponent<IProtectable>(out var protectable);
             bool hasKnockbackable = hit.collider.TryGetComponent<IKnockbackable>(out var knockbackable);
 
+            // Если попали в стену или объект без здоровья
             if (!hasDamageable && !hasProtectable)
             {
                 HitscanHitInfo wallHitInfo = new HitscanHitInfo(hit.point, hit.normal, hit.collider);
@@ -130,6 +136,14 @@ public class HitscanWeapon
                 }
                 break;
             }
+
+            // Если этот персонаж уже получал урон от этой пеллеты, пропускаем нанесение урона, но даем пуле лететь дальше
+            if (hitCharacters.Contains(hitRoot))
+            {
+                continue;
+            }
+
+            hitCharacters.Add(hitRoot);
 
             HitscanHitInfo hitInfo = new HitscanHitInfo(hit.point, hit.normal, hit.collider);
             OnHit?.Invoke(hitInfo);
@@ -169,7 +183,6 @@ public class HitscanWeapon
             }
 
             currentDamage = damageToApply;
-            currentRayOrigin = hit.point + direction * 0.01f;
         }
     }
 

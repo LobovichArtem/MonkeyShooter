@@ -11,6 +11,8 @@ public class WeaponSelector : MonoBehaviour
     private void Start()
     {
         _humanInput = ServiceLocator.Get<InputService>().HumanInput as HumanInput;
+        if (WeaponData != null)
+            EquipWeapon();
     }
 
     [ContextMenu("Equip")]

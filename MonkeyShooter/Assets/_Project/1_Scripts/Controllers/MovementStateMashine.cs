@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class PlayerMovement
+public class MovementStateMashine
 {
     [SerializeField] private MovementConfig _config;
     [SerializeField] private CharacterMover _mover;
 
     private MovementStateMachine _stateMachine;
 
-    public PlayerMovement(MovementConfig config,  CharacterMover mover)
+    public MovementStateMashine(MovementConfig config,  CharacterMover mover)
     {
         _config = config;
         _mover = mover;

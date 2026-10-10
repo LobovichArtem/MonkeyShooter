@@ -16,6 +16,13 @@ public class Health : MonoBehaviour, IDamageable
         CurrentHealth = MaxHealth;
     }
 
+    [ContextMenu("Dead")]
+    public void Dead()
+    {
+        CurrentHealth = 0;
+        OnDied?.Invoke();
+    }
+
     public void TakeDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
         if (IsDead) return;
@@ -26,7 +33,6 @@ public class Health : MonoBehaviour, IDamageable
         if (IsDead)
         {
             OnDied?.Invoke();
-            Destroy(gameObject);
         }
     }
 }

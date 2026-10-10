@@ -102,8 +102,10 @@ public class CharacterMover : MonoBehaviour, IImpulseReceiver
 
 
 
-    private void FixedUpdate()
+    public void FixedUpdate()
     {
+        if (Controller.enabled == false)
+            return;
         ApplyGravity();
         ProcessMovement();
     }

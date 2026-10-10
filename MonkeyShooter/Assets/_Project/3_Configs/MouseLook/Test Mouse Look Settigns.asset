@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 875721ec1537d1a41a8357c7947f6722, type: 3}
   m_Name: Test Mouse Look Settigns
   m_EditorClassIdentifier: Assembly-CSharp::MouseLookSettigns
-  <Sensitivity>k__BackingField: 0.48
+  <Sensitivity>k__BackingField: 0.25
   <MinMaxX>k__BackingField: {x: 0, y: 0}
   <MinMaxY>k__BackingField: {x: -90, y: 90}
   <SmoothSpeed>k__BackingField: 100

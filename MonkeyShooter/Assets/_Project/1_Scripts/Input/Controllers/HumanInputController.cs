@@ -14,7 +14,7 @@ public class HumanInputController : MonoBehaviour
 
     private HumanInput _humanInput;
     private MouseLook _mouseLook;
-    private PlayerMovement _playerMovement;
+    private MovementStateMashine _playerMovement;
     private WeaponHandler _weaponHandler;
 
     private float _jumpBufferTimer;
@@ -38,7 +38,7 @@ public class HumanInputController : MonoBehaviour
     {
         var mover = GetComponent<CharacterMover>();
         mover.Initialize(_config);
-        _playerMovement = new PlayerMovement(_config, mover);
+        _playerMovement = new MovementStateMashine(_config, mover);
         _playerMovement.InitializeStateMachine();
     }
 
