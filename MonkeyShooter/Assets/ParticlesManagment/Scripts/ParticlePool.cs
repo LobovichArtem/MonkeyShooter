@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class ParticlePool : GenericPool<ParticleSystem>
@@ -17,11 +16,12 @@ public class ParticlePool : GenericPool<ParticleSystem>
     {
         var ps = Get();
         var trans = ps.transform;
-
-        trans.position = position;
-        trans.rotation = rotation;
         if (parent != null)
             trans.SetParent(parent, false);
+
+        trans.rotation = rotation;
+        trans.position = position;
+
 
         return ps;
     }
@@ -36,14 +36,14 @@ public class ParticlePool : GenericPool<ParticleSystem>
 
     protected override void OnGet(ParticleSystem ps)
     {
-        ps.gameObject.SetActive(true);
-        //if (!ps.isPlaying) ps.Play();
+        //ps.gameObject.SetActive(true);
+        if (!ps.isPlaying) ps.Play();
     }
 
     protected override void OnRelease(ParticleSystem ps)
     {
-        //ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-        ps.gameObject.SetActive(false);
+        ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        //ps.gameObject.SetActive(false);
     }
 
     protected override void OnDestroyInstance(ParticleSystem ps)

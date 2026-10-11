@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07e187ded50dd48429844e119c1c6c1d, type: 3}
+  m_Name: ParticlesPhysicsMaterialsConfig
+  m_EditorClassIdentifier: Assembly-CSharp::ParticlesPhysicsMaterialsConfig
+  _particleTypes:
+  - <ParticleKey>k__BackingField:
+      _key: concrete_hit
+    <PhysicsMaterial>k__BackingField: {fileID: 13400000, guid: 4077f933cc5da144fa08ce54a007f5b5, type: 2}
+    <PrewarmCount>k__BackingField: 50
+  - <ParticleKey>k__BackingField:
+      _key: metall_hit
+    <PhysicsMaterial>k__BackingField: {fileID: 13400000, guid: a9af2899d54b80649a23d9cec45b5ba2, type: 2}
+    <PrewarmCount>k__BackingField: 50
+  - <ParticleKey>k__BackingField:
+      _key: body_hit
+    <PhysicsMaterial>k__BackingField: {fileID: 13400000, guid: 3bd656e8f92859d4aa693497510d3bc2, type: 2}
+    <PrewarmCount>k__BackingField: 50
+  _defaultCapacity: 15
+  _maxSize: 100
