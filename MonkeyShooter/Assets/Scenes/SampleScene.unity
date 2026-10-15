@@ -529,13 +529,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 33176387}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0.7004892, z: -0, w: 0.71366304}
   m_LocalPosition: {x: 2.71197, y: 0.28997, z: 5.19792}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -88.933, z: 0}
 --- !u!1 &34377226 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1082271958561512970, guid: 3ad6992d3315c8042915ced40b5535bd, type: 3}
@@ -3504,8 +3504,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67653a82725973441b9c04318058fd86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BotMovementTest
-  _config: {fileID: 11400000, guid: 22494023856ea5540bf932dccf0795d1, type: 2}
-  _runDuration: 2
+  _config: {fileID: 11400000, guid: c8f5dcd6dc67c2d478a1cf3672b45b02, type: 2}
+  _runDuration: 3
 --- !u!114 &353579990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16047,8 +16047,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67653a82725973441b9c04318058fd86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BotMovementTest
-  _config: {fileID: 11400000, guid: 22494023856ea5540bf932dccf0795d1, type: 2}
-  _runDuration: 2
+  _config: {fileID: 11400000, guid: c8f5dcd6dc67c2d478a1cf3672b45b02, type: 2}
+  _runDuration: 3
 --- !u!114 &1657994935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17279,7 +17279,7 @@ GameObject:
   - component: {fileID: 1826793490}
   - component: {fileID: 1826793489}
   - component: {fileID: 1826793495}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17388,8 +17388,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67653a82725973441b9c04318058fd86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BotMovementTest
-  _config: {fileID: 11400000, guid: 22494023856ea5540bf932dccf0795d1, type: 2}
-  _runDuration: 2
+  _config: {fileID: 11400000, guid: c8f5dcd6dc67c2d478a1cf3672b45b02, type: 2}
+  _runDuration: 3
 --- !u!114 &1836811342
 MonoBehaviour:
   m_ObjectHideFlags: 0

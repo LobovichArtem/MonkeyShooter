@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MovementConfig
   <BaseMass>k__BackingField: 1
   <GroundedStickForce>k__BackingField: -2
-  <ImpulseDampingRate>k__BackingField: 5
+  <ImpulseDampingRate>k__BackingField: 2
   <MinMassThreshold>k__BackingField: 0.1
   <DefaultGravityMultiplier>k__BackingField: 1
   <BaseMoveSpeed>k__BackingField: 3
   <JumpForce>k__BackingField: 4
-  <AirAcceleration>k__BackingField: 10
+  <AirAcceleration>k__BackingField: 2
   <AirForwardMultiplier>k__BackingField: 0.5
   <AirStrafeMultiplier>k__BackingField: 1
   <DirectionChangeImpulse>k__BackingField: 4

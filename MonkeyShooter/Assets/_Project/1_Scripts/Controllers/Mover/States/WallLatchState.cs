@@ -80,10 +80,9 @@ public class WallLatchState : IMovementState
         Vector3 jumpDirection = lookDirection.normalized;
 
         _mover.SetVerticalVelocity(_config.JumpForce);
-
-        if (_mover.IsTouchingWall == false)
-            _mover.SetHorizontalVelocity(jumpDirection * _config.BaseMoveSpeed);
-        else
-            _mover.SetHorizontalVelocity(Vector3.zero);
+        _mover.AddImpulse(jumpDirection * _config.JumpForce);
+        //_mover.SetHorizontalVelocity(jumpDirection * _config.JumpForce);
+        //if (_mover.IsTouchingWall)
+        //    _mover.SetHorizontalVelocity(Vector3.zero);
     }
 }

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: JumpPadConfig
   m_EditorClassIdentifier: Assembly-CSharp::JumpPadConfig
   <ImpulseDirection>k__BackingField: {x: 0, y: 1, z: 0}
-  <ImpulseForce>k__BackingField: 25
+  <ImpulseForce>k__BackingField: 10
   <OverrideVerticalVelocity>k__BackingField: 1

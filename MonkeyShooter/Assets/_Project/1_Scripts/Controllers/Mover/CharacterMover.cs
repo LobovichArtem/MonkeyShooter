@@ -7,6 +7,7 @@ public class CharacterMover : MonoBehaviour, IImpulseReceiver
     public MovementConfig Config { get; private set;  }
 
     private Vector3 _externalVelocity;
+    private bool _impulse = false;
     private Vector3 _horizontalVelocity;
     private float _verticalVelocity;
 
@@ -17,7 +18,6 @@ public class CharacterMover : MonoBehaviour, IImpulseReceiver
     private float _lastWallContactTime;
 
     public bool IsTouchingWall => Time.time - _lastWallContactTime < 0.1f; // Актуальность контакта (100 мс)
-
     public bool IsGrounded => Controller.isGrounded;
     public Vector3 HorizontalVelocity => _horizontalVelocity;
     public float VerticalVelocity => _verticalVelocity;
@@ -30,6 +30,7 @@ public class CharacterMover : MonoBehaviour, IImpulseReceiver
         {
             _lastWallContactTime = Time.time;
         }
+        _externalVelocity = Vector3.zero;
     }
 
     public void Initialize(MovementConfig config)
@@ -77,10 +78,11 @@ public class CharacterMover : MonoBehaviour, IImpulseReceiver
         // Если падаем и получаем импульс вверх — гасим падение до 0
         if (processedImpulse.y > 0f && _verticalVelocity < 0f)
         {
-            _verticalVelocity = 0f;
+            _verticalVelocity = 0.01f;
         }
 
         _externalVelocity += processedImpulse;
+        _impulse = true;
     }
 
     //public bool TryGetWallBounceDirection(out Vector3 bounceDirection)
@@ -106,8 +108,8 @@ public class CharacterMover : MonoBehaviour, IImpulseReceiver
     {
         if (Controller.enabled == false)
             return;
-        ApplyGravity();
         ProcessMovement();
+        ApplyGravity();
     }
 
     private void ProcessMovement()
@@ -119,16 +121,18 @@ public class CharacterMover : MonoBehaviour, IImpulseReceiver
         Controller.Move(finalVelocity * Time.deltaTime);
 
         // Гашение внешнего импульса
-        float effectiveMass = Mathf.Max(_currentMass, Config.MinMassThreshold);
-        float damping = (Config.ImpulseDampingRate / effectiveMass) * Time.deltaTime;
-        _externalVelocity = Vector3.Lerp(_externalVelocity, Vector3.zero, damping);
+        //float effectiveMass = Mathf.Max(_currentMass, Config.MinMassThreshold);
+        //float damping = (Config.ImpulseDampingRate / effectiveMass) * Time.deltaTime;
+        //_externalVelocity = Vector3.Lerp(_externalVelocity, Vector3.zero, damping);
     }
 
     private void ApplyGravity()
     {
-        if (IsGrounded && _verticalVelocity < 0)
+        if (IsGrounded)
         {
-            _verticalVelocity = Config.GroundedStickForce;
+            if(_verticalVelocity < 0)
+                _verticalVelocity = Config.GroundedStickForce;
+            _externalVelocity = Vector3.zero;
         }
 
         float gravity = Physics.gravity.y * _gravityMultiplier;

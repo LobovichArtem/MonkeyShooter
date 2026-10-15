@@ -10,6 +10,9 @@ public class AirborneState : IMovementState
 
     private int _currentLatchCount;
 
+    private Vector3 _inertia;
+    private float _maxLenght;
+
     public AirborneState(
         CharacterMover mover,
         MovementConfig config,
@@ -29,7 +32,11 @@ public class AirborneState : IMovementState
         _wallLatchState = wallLatchState;
     }
 
-    public void Enter() { }
+    public void Enter() 
+    {
+        _inertia = _mover.Controller.velocity;
+        _maxLenght = _inertia.magnitude;
+    }
     public void Exit() {  }
 
     public void Update(in MovementFrameInput input)
@@ -52,44 +59,54 @@ public class AirborneState : IMovementState
             }
         }
 
-        // 3. Плавный Air Strafe
-        Vector3 currentVelocity = _mover.HorizontalVelocity;
+        var dir = input.MoveDirection;
+        var dot = Mathf.Clamp01(Vector3.Dot(_inertia.normalized, dir));
+        if (dir == Vector3.zero)
+            dot = 1;
 
-        if (input.MoveDirection != Vector3.zero)
-        {
-            // Вместо _mover.transform используем LookDirection (взгляд камеры по горизонтали)
-            // Либо вычисляем локальные оси на основе input.LookDirection
-            Vector3 lookForward = input.LookDirection;
-            lookForward.y = 0f;
-            lookForward.Normalize();
-            Vector3 lookRight = Vector3.Cross(Vector3.up, lookForward);
+        if (dot < 0.1f)
+            _inertia = Vector3.zero;
+        var inertia = _inertia * dot;
+            
+        Vector3 currentVelocity = _inertia*dot + dir * _config.AirAcceleration;
+        var lenght = Mathf.Max(_maxLenght, input.MoveDirection.magnitude);
+        currentVelocity = Vector3.ClampMagnitude(currentVelocity, lenght);
+        //Vector3.MoveTowards(_startVelocity, Vector3.zero, _config.AirAcceleration * Time.deltaTime);
+        //if (input.MoveDirection != Vector3.zero)
+        //{
+        //    // Вместо _mover.transform используем LookDirection (взгляд камеры по горизонтали)
+        //    // Либо вычисляем локальные оси на основе input.LookDirection
+        //    Vector3 lookForward = input.LookDirection;
+        //    lookForward.y = 0f;
+        //    lookForward.Normalize();
+        //    Vector3 lookRight = Vector3.Cross(Vector3.up, lookForward);
 
-            // Переводим мировой ввод в локальные оси камеры
-            float forwardAmount = Vector3.Dot(input.MoveDirection, lookForward);
-            float strafeAmount = Vector3.Dot(input.MoveDirection, lookRight);
+        //    // Переводим мировой ввод в локальные оси камеры
+        //    float forwardAmount = Vector3.Dot(input.MoveDirection, lookForward);
+        //    float strafeAmount = Vector3.Dot(input.MoveDirection, lookRight);
 
-            forwardAmount *= _config.AirForwardMultiplier;
-            strafeAmount *= _config.AirStrafeMultiplier;
+        //    forwardAmount *= _config.AirForwardMultiplier;
+        //    strafeAmount *= _config.AirStrafeMultiplier;
 
-            // Собираем обратно желаемое направление движения с учетом множителей
-            Vector3 wishDir = (lookForward * forwardAmount + lookRight * strafeAmount).normalized;
+        //    // Собираем обратно желаемое направление движения с учетом множителей
+        //    Vector3 wishDir = (lookForward * forwardAmount + lookRight * strafeAmount).normalized;
 
-            float currentSpeed = currentVelocity.magnitude;
-            Vector3 currentDir = currentSpeed > 0.001f ? currentVelocity / currentSpeed : wishDir;
+        //    float currentSpeed = currentVelocity.magnitude;
+        //    Vector3 currentDir = currentSpeed > 0.001f ? currentVelocity / currentSpeed : wishDir;
 
-            float dot = Vector3.Dot(currentDir, wishDir);
-            float angleMultiplier = Mathf.Clamp01((1f + dot) * 0.5f + 0.2f);
+        //    float dot = Vector3.Dot(currentDir, wishDir);
+        //    float angleMultiplier = Mathf.Clamp01((1f + dot) * 0.5f + 0.2f);
 
-            float targetSpeed = Mathf.Max(_config.BaseMoveSpeed, currentSpeed);
-            Vector3 targetVelocity = wishDir * targetSpeed;
+        //    float targetSpeed = Mathf.Max(_config.BaseMoveSpeed, currentSpeed);
+        //    Vector3 targetVelocity = wishDir * targetSpeed;
 
-            float accelRate = _config.AirAcceleration * angleMultiplier;
-            currentVelocity = Vector3.MoveTowards(
-                currentVelocity,
-                targetVelocity,
-                accelRate * Time.deltaTime
-            );
-        }
+        //    float accelRate = _config.AirAcceleration * angleMultiplier;
+        //    currentVelocity = Vector3.MoveTowards(
+        //        currentVelocity,
+        //        targetVelocity,
+        //        accelRate * Time.deltaTime
+        //    );
+        //}
 
         _mover.SetHorizontalVelocity(currentVelocity);
     }

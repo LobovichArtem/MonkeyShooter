@@ -38,7 +38,12 @@ public class GroundedState : IMovementState
         // 2. Прыжок
         if (input.IsJumpRequested)
         {
+            // Передаем текущую реальную скорость контроллера (если уперлись в стену, она будет нулевой)
+            Vector3 initialVelocity = _mover.Controller.velocity;
+            
+            //_mover.AddImpulse(new Vector3(initialVelocity.x, 0f, initialVelocity.z));
             _mover.Jump(_config.JumpForce);
+            
             _stateMachine.ChangeState(_airborneState);
             return;
         }

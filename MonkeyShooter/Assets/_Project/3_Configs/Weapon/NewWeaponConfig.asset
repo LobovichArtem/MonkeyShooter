@@ -17,7 +17,7 @@ MonoBehaviour:
   <Penetration>k__BackingField: 50
   <MinDamage>k__BackingField: 10
   <EffectiveDistance>k__BackingField: 15
-  <MaxDistance>k__BackingField: 50
+  <MaxDistance>k__BackingField: 1000
   <ImpactForce>k__BackingField: 100
   <PelletCount>k__BackingField: 1
   <SpreadAngle>k__BackingField: 0
